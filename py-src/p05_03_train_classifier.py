@@ -10,21 +10,22 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import LinearSVC
 
 from my_util import print_section_header, determine_color_converter
-from p05_02a_feature_extraction import extract_features
+from p05_02_feature_extraction import extract_features
 
 
-#%% Step 2b - Train classifier
+#%% Step 3 - Train classifier
 
 def extract_training_features(
         vehicle_img_dir, non_vehicle_img_dir, cspace,
-        spatial_feat, hist_feat,hog_feat, spatial_size,
-        hist_bins, orient, pix_per_cell, cell_per_block, hog_channel):
+        spatial_feat, hist_feat, hog_feat, spatial_size, hist_bins,
+        orient, pix_per_cell, cell_per_block, hog_channel):
 
     vehicle_imgs = glob.glob(vehicle_img_dir + '**/*.png', recursive=True)
     non_vehicle_imgs = glob.glob(non_vehicle_img_dir + '**/*.png', recursive=True)
     print("* Number Of Vehicle Training Images: {}".format(len(vehicle_imgs)))
     print("* Number Of Non-Vehicle Training Images: {}".format(len(non_vehicle_imgs)))
 
+    print("* Color Space: {}".format(cspace))
     print("* Spatial Features: {}\n  - size: {}".format(spatial_feat, spatial_size))
     print("* Color Histogram: {}\n  - Number of bins: {}".format(hist_feat, hist_bins))
     print("* HOG Features: {}".format(hog_feat))
@@ -152,7 +153,7 @@ def perform_classifier_training(
 
 
 if __name__ == '__main__':
-    # Step 2 - Train classifier
+    # Step 3 - Train classifier
     train_img_dir = '../training_images/'
     results_dir = '../results/'
     vehicle_img_dir = train_img_dir + 'vehicles/'
@@ -160,11 +161,11 @@ if __name__ == '__main__':
 
     param_space = (
         ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
+        ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 0),
         ('LUV', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
         ('YUV', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
         ('HLS', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
         ('HSV', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
-        ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 0),
         ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 1),
         ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 2),
         ('YCrCb', True, False, False, (32, 32), 32, 9, 8, 2, 'ALL'),

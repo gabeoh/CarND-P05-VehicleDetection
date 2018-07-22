@@ -6,7 +6,8 @@ from moviepy.editor import VideoFileClip
 
 from my_util import print_section_header, analyze_test_image
 import p05_01_correct_distortion as dist_correct
-import p05_02b_train_classifier as train_class
+import p05_02_feature_extraction as feat_ext
+import p05_03_train_classifier as train_class
 
 project_root_dir = '../'
 output_dir = project_root_dir + 'output_images/'
@@ -45,8 +46,12 @@ def detect_vehicle_images(img_files, steps):
         pickle_file = results_dir + 'camera_cal.p'
         dist_correct.perform_distortion_correction(pickle_file, test_img_dir, img_files, undistorted_img_dir)
 
-    # Step 2 - Train classifier
+    # Step 2 - Extract features
     if (not steps) or (2 in steps):
+        feat_ext.demonstrate_feature_extraction(vehicle_img_dir, non_vehicle_img_dir)
+
+    # Step 3 - Train classifier
+    if (not steps) or (3 in steps):
         train_class.perform_classifier_training(vehicle_img_dir, non_vehicle_img_dir, results_dir)
 
 
