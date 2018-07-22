@@ -17,6 +17,7 @@ vehicle_img_dir = train_img_dir + 'vehicles/'
 non_vehicle_img_dir = train_img_dir + 'non-vehicles/'
 test_img_dir = project_root_dir + 'test_images/'
 test_video_dir = project_root_dir + 'test_videos/'
+feat_ext_img_dir = output_dir + 'feat_extract/'
 undistorted_img_dir = output_dir + 'undistorted/'
 binary_lane_dir = output_dir + 'binary_lanes/'
 perspective_trans_dir = output_dir + 'perspective/'
@@ -48,7 +49,7 @@ def detect_vehicle_images(img_files, steps):
 
     # Step 2 - Extract features
     if (not steps) or (2 in steps):
-        feat_ext.demonstrate_feature_extraction(vehicle_img_dir, non_vehicle_img_dir)
+        feat_ext.demonstrate_feature_extraction(vehicle_img_dir, non_vehicle_img_dir, feat_ext_img_dir)
 
     # Step 3 - Train classifier
     if (not steps) or (3 in steps):

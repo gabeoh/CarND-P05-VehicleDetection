@@ -1,0 +1,22 @@
+Running lane detection with arguments: Namespace(files=None, run_image=True, run_video=False, steps=[2])
+
+** Running lane detection on test images **
+
+###################################
+# Feature Extraction
+###################################
+* Color Space: YCrCb
+* Spatial Feature Size: (32, 32)
+* Color Histogram Bins: 32
+* HOG Features:
+  - Orientations: 9
+  - Pixels Per Cell: 8
+  - Cells Per Block: 2
+  - HOG channel(s): ALL
+* Number Of Vehicle Training Images: 8792
+* Number Of Non-Vehicle Training Images: 8968
+* Vehicle Image Sample: ../training_images/vehicles/KITTI_extracted/5331.png (3605)
+* Non-Vehicle Image Sample: ../training_images/non-vehicles/GTI/image124.png (981)
+
+Start feature extraction on sample images (at 428982.930)
+Completed feature extraction on sample images 1.573s (at 428984.503)
