@@ -18,6 +18,9 @@ the vehicles by creating a heat map of recurring detections across frames.
 
 [//]: # (Image References)
 
+[img_feat_ext_01]: ./output_images/feat_extract/sample_image_3605_981.jpg
+[img_feat_ext_02]: ./output_images/feat_extract/color_hist_3605_981.jpg
+[img_feat_ext_03]: ./output_images/feat_extract/hog_feature_3605_981.jpg
 
 [image1]: ./examples/car_not_car.png
 [image2]: ./examples/HOG_example.jpg
@@ -31,48 +34,59 @@ the vehicles by creating a heat map of recurring detections across frames.
 
 ---
 ## Feature Extraction
+The source code for feature extraction is in
+[py-src/p05_02_feature_extraction.py](py-src/p05_02_feature_extraction.py).
+
+From provided vehicle and non-vehicle training images,
+following features are extracted:
 * Histogram of Oriented Gradients (HOG)
-* Binned color features
+* Binned spatial color features
 * Histograms of color 
 
-**Explain how (and identify where in your code) you extracted HOG features 
-from the training images.**
-
-_Explanation given for methods used to extract HOG features, including 
-which color space was chosen, which HOG parameters (orientations, 
-pixels_per_cell, cells_per_block), and why._
-
-The code for this step is contained in the first code cell of the IPython 
-notebook (or in lines # through # of the file called `some_file.py`).  
-
-I started by reading in all the `vehicle` and `non-vehicle` images.  
-Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
-
-![alt text][image1]
-
-I then explored different color spaces and different `skimage.hog()` 
-parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  
-I grabbed random images from each of the two classes and displayed them to 
-get a feel for what the `skimage.hog()` output looks like.
-
-Here is an example using the `YCrCb` color space and HOG parameters of 
-`orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
-![alt text][image2]
+#### Sample Images
+The image below illustrate examples of vehicle and non-vehicle training images.
+![Sample Images][img_feat_ext_01]
 
 
-**Explain how you settled on your final choice of HOG parameters.**
+#### Color Histograms
+The graph below shows color histograms of above sample images in
+`YCrCb` color space, each channel aggregated to 32 bins.
+![Color Histogram][img_feat_ext_02]
 
-I tried various combinations of parameters and...
+#### HOG Feature Extraction
+Various color spaces and HOG parameters are explored for the feature
+extraction.  Finally, the color space of `YCrCb`, and the HOG parameters of
+`origentations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`
+are selected.
+The image below demonstrates HOG feature extractions of the sample images.
+![HOG Features][img_feat_ext_03]
 
 
 ---
 ## Classifier Training
+The source code for feature extraction is in
+[py-src/p05_03_train_classifier.py](py-src/p05_03_train_classifier.py).
 
-**Describe how (and identify where in your code) you trained a classifier 
-using your selected HOG features (and color features if you used them).**
+Linear Support Vector Machine (SVM) is selected as a classifier in this
+implementation.  The classifier is trained using all three features
+(spatial, color histogram, and HOG) extracted from provided vehicle and
+non-vehicle training images.
 
-I trained a linear SVM using...
+The training images are divided into training (80%) and test (20%) sets.
+The classifier is trained on the training set, and then validated on
+the test set.
+
+The classifier is trained and tested across various color spaces and
+feature parameters in order to determine optimal settings.
+The best accuracy is achieved when all three feature extractions
+are utilized, and all three color channels are used for HOG features.
+High test accuracy (~99%) is achieved for all of
+`YCrCb`, `LUV`, `YUV`, and `HSV` color spaces.  `YCrCb` color space is
+selected for this implementation.
+
+The details on sweeping across various parameter space can be found in the
+train classifier output logs,
+[results/train_classifier.log](results/train_classifier.log). 
 
 
 ---
