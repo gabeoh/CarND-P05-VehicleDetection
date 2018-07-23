@@ -29,7 +29,7 @@ video_dst_dir = output_dir + 'video/'
 
 #%% Run lane detection on test images
 def detect_vehicle_images(img_files, steps):
-    print("\n** Running lane detection on test images **")
+    print("\n** Running vehicle detection on test images **")
 
     # Step 0 - Analyze test image
     if (not steps) or (0 in steps):
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     parser.add_argument('-s', '--steps', dest='steps', type=int, nargs='*',
                         help='Provide steps to execute. Run all steps when omitted.')
     args  = parser.parse_args()
-    print("Running lane detection with arguments: {}".format(args))
+    print("Running vehicle detection with arguments: {}".format(args))
 
     files = [] if args.files is None else args.files
     if args.run_image:

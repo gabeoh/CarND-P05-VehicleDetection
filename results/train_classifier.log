@@ -12,58 +12,25 @@
 * HOG Features: True
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
 
-Start feature extraction on dataset (at 418694.390)
-Completed feature extraction on dataset 135.104s (at 418829.494)
+Start feature extraction on dataset (at 451066.164)
+Completed feature extraction on dataset 160.332s (at 451226.496)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 418837.734)
-Completed classifier training 22.388s (at 418860.121)
+Start classifier training (at 451234.536)
+Completed classifier training 15.982s (at 451250.518)
 
-Start checking accuracy score (at 418860.121)
-Completed checking accuracy score 0.027s (at 418860.148)
-* Test Accuracy of SVC: 98.9%
+Start checking accuracy score (at 451250.518)
+Completed checking accuracy score 0.029s (at 451250.546)
+* Test Accuracy of SVC: 98.8%
 
-Start prediction time estimation (at 418860.148)
-Completed prediction time estimation 0.000s (at 418860.149)
-* Labels    : [1. 0. 0. 0. 1. 1. 0. 0. 0. 1.]
-* Preditions: [1. 1. 0. 0. 1. 1. 0. 0. 0. 1.]
-* Elapsed Time (10 predictions): 0.00017s
+Start prediction time estimation (at 451250.546)
+Completed prediction time estimation 0.000s (at 451250.546)
+* Labels    : [1. 1. 0. 1. 0. 0. 0. 0. 0. 1.]
+* Preditions: [1. 1. 0. 1. 0. 0. 0. 0. 0. 1.]
+* Elapsed Time (10 predictions): 0.00014s
 Pickle the trained classifier to ../results/classifier_YCrCb_sp32_hist32_hog_9_8_2_ALL.p
-
-###################################
-# Train Classifier
-###################################
-* Number Of Vehicle Training Images: 8792
-* Number Of Non-Vehicle Training Images: 8968
-* Color Space: YCrCb
-* Spatial Features: True
-  - size: (32, 32)
-* Color Histogram: True
-  - Number of bins: 32
-* HOG Features: True
-  - using 9 orientations, 8 pixels per cell, and 2 cells per block on '0' HOG channel(s)
-
-Start feature extraction on dataset (at 418860.683)
-Completed feature extraction on dataset 64.374s (at 418925.056)
-* Total Dataset: 17760
-* Total Training Dataset: 14208
-* Total Test Dataset: 3552
-
-Start classifier training (at 418929.463)
-Completed classifier training 13.410s (at 418942.874)
-
-Start checking accuracy score (at 418942.874)
-Completed checking accuracy score 0.015s (at 418942.888)
-* Test Accuracy of SVC: 97.6%
-
-Start prediction time estimation (at 418942.888)
-Completed prediction time estimation 0.000s (at 418942.888)
-* Labels    : [1. 1. 0. 1. 1. 0. 0. 1. 0. 0.]
-* Preditions: [1. 1. 0. 1. 1. 0. 0. 1. 0. 0.]
-* Elapsed Time (10 predictions): 0.00013s
-Pickle the trained classifier to ../results/classifier_YCrCb_sp32_hist32_hog_9_8_2_0.p
 
 ###################################
 # Train Classifier
@@ -78,24 +45,24 @@ Pickle the trained classifier to ../results/classifier_YCrCb_sp32_hist32_hog_9_8
 * HOG Features: True
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
 
-Start feature extraction on dataset (at 418943.352)
-Completed feature extraction on dataset 136.627s (at 419079.979)
+Start feature extraction on dataset (at 451251.091)
+Completed feature extraction on dataset 158.324s (at 451409.415)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 419090.139)
-Completed classifier training 33.561s (at 419123.699)
+Start classifier training (at 451417.603)
+Completed classifier training 20.011s (at 451437.615)
 
-Start checking accuracy score (at 419123.699)
-Completed checking accuracy score 0.044s (at 419123.743)
-* Test Accuracy of SVC: 99.0%
+Start checking accuracy score (at 451437.615)
+Completed checking accuracy score 0.050s (at 451437.664)
+* Test Accuracy of SVC: 98.5%
 
-Start prediction time estimation (at 419123.743)
-Completed prediction time estimation 0.000s (at 419123.744)
-* Labels    : [0. 1. 1. 1. 1. 0. 0. 0. 1. 1.]
-* Preditions: [0. 1. 1. 1. 1. 0. 0. 0. 1. 1.]
-* Elapsed Time (10 predictions): 0.00014s
+Start prediction time estimation (at 451437.664)
+Completed prediction time estimation 0.000s (at 451437.665)
+* Labels    : [0. 1. 0. 0. 1. 0. 0. 0. 1. 1.]
+* Preditions: [0. 1. 0. 0. 1. 0. 0. 0. 1. 1.]
+* Elapsed Time (10 predictions): 0.00018s
 Pickle the trained classifier to ../results/classifier_LUV_sp32_hist32_hog_9_8_2_ALL.p
 
 ###################################
@@ -111,58 +78,25 @@ Pickle the trained classifier to ../results/classifier_LUV_sp32_hist32_hog_9_8_2
 * HOG Features: True
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
 
-Start feature extraction on dataset (at 419124.297)
-Completed feature extraction on dataset 140.911s (at 419265.207)
+Start feature extraction on dataset (at 451438.225)
+Completed feature extraction on dataset 155.887s (at 451594.112)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 419275.870)
-Completed classifier training 6.994s (at 419282.864)
+Start classifier training (at 451602.569)
+Completed classifier training 21.365s (at 451623.934)
 
-Start checking accuracy score (at 419282.864)
-Completed checking accuracy score 0.030s (at 419282.894)
-* Test Accuracy of SVC: 98.8%
+Start checking accuracy score (at 451623.934)
+Completed checking accuracy score 0.043s (at 451623.977)
+* Test Accuracy of SVC: 98.7%
 
-Start prediction time estimation (at 419282.894)
-Completed prediction time estimation 0.000s (at 419282.894)
-* Labels    : [0. 0. 1. 0. 0. 0. 1. 1. 0. 0.]
-* Preditions: [0. 0. 1. 0. 0. 0. 1. 1. 0. 0.]
-* Elapsed Time (10 predictions): 0.00016s
+Start prediction time estimation (at 451623.977)
+Completed prediction time estimation 0.000s (at 451623.978)
+* Labels    : [1. 1. 1. 1. 0. 1. 1. 1. 1. 0.]
+* Preditions: [1. 1. 1. 1. 0. 1. 1. 1. 1. 0.]
+* Elapsed Time (10 predictions): 0.00015s
 Pickle the trained classifier to ../results/classifier_YUV_sp32_hist32_hog_9_8_2_ALL.p
-
-###################################
-# Train Classifier
-###################################
-* Number Of Vehicle Training Images: 8792
-* Number Of Non-Vehicle Training Images: 8968
-* Color Space: HLS
-* Spatial Features: True
-  - size: (32, 32)
-* Color Histogram: True
-  - Number of bins: 32
-* HOG Features: True
-  - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
-
-Start feature extraction on dataset (at 419283.425)
-Completed feature extraction on dataset 156.839s (at 419440.264)
-* Total Dataset: 17760
-* Total Training Dataset: 14208
-* Total Test Dataset: 3552
-
-Start classifier training (at 419449.721)
-Completed classifier training 34.726s (at 419484.447)
-
-Start checking accuracy score (at 419484.447)
-Completed checking accuracy score 0.070s (at 419484.516)
-* Test Accuracy of SVC: 98.6%
-
-Start prediction time estimation (at 419484.516)
-Completed prediction time estimation 0.000s (at 419484.517)
-* Labels    : [1. 0. 0. 0. 0. 1. 0. 1. 0. 0.]
-* Preditions: [1. 0. 0. 0. 0. 1. 0. 1. 0. 0.]
-* Elapsed Time (10 predictions): 0.00020s
-Pickle the trained classifier to ../results/classifier_HLS_sp32_hist32_hog_9_8_2_ALL.p
 
 ###################################
 # Train Classifier
@@ -177,25 +111,91 @@ Pickle the trained classifier to ../results/classifier_HLS_sp32_hist32_hog_9_8_2
 * HOG Features: True
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
 
-Start feature extraction on dataset (at 419485.176)
-Completed feature extraction on dataset 156.606s (at 419641.782)
+Start feature extraction on dataset (at 451624.529)
+Completed feature extraction on dataset 157.884s (at 451782.413)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 419651.079)
-Completed classifier training 27.691s (at 419678.770)
+Start classifier training (at 451790.400)
+Completed classifier training 25.314s (at 451815.714)
 
-Start checking accuracy score (at 419678.770)
-Completed checking accuracy score 0.046s (at 419678.816)
-* Test Accuracy of SVC: 99.0%
+Start checking accuracy score (at 451815.714)
+Completed checking accuracy score 0.043s (at 451815.757)
+* Test Accuracy of SVC: 98.6%
 
-Start prediction time estimation (at 419678.816)
-Completed prediction time estimation 0.000s (at 419678.816)
-* Labels    : [1. 0. 1. 0. 1. 1. 0. 0. 0. 1.]
-* Preditions: [1. 0. 1. 0. 1. 1. 0. 0. 0. 1.]
-* Elapsed Time (10 predictions): 0.00016s
+Start prediction time estimation (at 451815.757)
+Completed prediction time estimation 0.000s (at 451815.757)
+* Labels    : [0. 1. 0. 1. 0. 1. 0. 0. 1. 1.]
+* Preditions: [0. 1. 0. 1. 0. 1. 0. 0. 1. 0.]
+* Elapsed Time (10 predictions): 0.00014s
 Pickle the trained classifier to ../results/classifier_HSV_sp32_hist32_hog_9_8_2_ALL.p
+
+###################################
+# Train Classifier
+###################################
+* Number Of Vehicle Training Images: 8792
+* Number Of Non-Vehicle Training Images: 8968
+* Color Space: HLS
+* Spatial Features: True
+  - size: (32, 32)
+* Color Histogram: True
+  - Number of bins: 32
+* HOG Features: True
+  - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
+
+Start feature extraction on dataset (at 451816.309)
+Completed feature extraction on dataset 158.403s (at 451974.712)
+* Total Dataset: 17760
+* Total Training Dataset: 14208
+* Total Test Dataset: 3552
+
+Start classifier training (at 451982.819)
+Completed classifier training 26.598s (at 452009.418)
+
+Start checking accuracy score (at 452009.418)
+Completed checking accuracy score 0.026s (at 452009.444)
+* Test Accuracy of SVC: 98.8%
+
+Start prediction time estimation (at 452009.444)
+Completed prediction time estimation 0.000s (at 452009.444)
+* Labels    : [1. 0. 1. 1. 0. 1. 0. 0. 1. 0.]
+* Preditions: [1. 0. 1. 1. 0. 1. 0. 0. 1. 0.]
+* Elapsed Time (10 predictions): 0.00017s
+Pickle the trained classifier to ../results/classifier_HLS_sp32_hist32_hog_9_8_2_ALL.p
+
+###################################
+# Train Classifier
+###################################
+* Number Of Vehicle Training Images: 8792
+* Number Of Non-Vehicle Training Images: 8968
+* Color Space: YCrCb
+* Spatial Features: True
+  - size: (32, 32)
+* Color Histogram: True
+  - Number of bins: 32
+* HOG Features: True
+  - using 9 orientations, 8 pixels per cell, and 2 cells per block on '0' HOG channel(s)
+
+Start feature extraction on dataset (at 452009.972)
+Completed feature extraction on dataset 82.978s (at 452092.950)
+* Total Dataset: 17760
+* Total Training Dataset: 14208
+* Total Test Dataset: 3552
+
+Start classifier training (at 452097.404)
+Completed classifier training 12.806s (at 452110.209)
+
+Start checking accuracy score (at 452110.209)
+Completed checking accuracy score 0.013s (at 452110.223)
+* Test Accuracy of SVC: 98.1%
+
+Start prediction time estimation (at 452110.223)
+Completed prediction time estimation 0.000s (at 452110.223)
+* Labels    : [0. 1. 1. 0. 1. 0. 0. 0. 0. 0.]
+* Preditions: [0. 1. 1. 0. 1. 0. 0. 0. 0. 0.]
+* Elapsed Time (10 predictions): 0.00013s
+Pickle the trained classifier to ../results/classifier_YCrCb_sp32_hist32_hog_9_8_2_0.p
 
 ###################################
 # Train Classifier
@@ -210,24 +210,24 @@ Pickle the trained classifier to ../results/classifier_HSV_sp32_hist32_hog_9_8_2
 * HOG Features: True
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on '1' HOG channel(s)
 
-Start feature extraction on dataset (at 419679.349)
-Completed feature extraction on dataset 84.401s (at 419763.750)
+Start feature extraction on dataset (at 452110.727)
+Completed feature extraction on dataset 55.374s (at 452166.101)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 419768.450)
-Completed classifier training 13.839s (at 419782.289)
+Start classifier training (at 452170.579)
+Completed classifier training 12.419s (at 452182.998)
 
-Start checking accuracy score (at 419782.289)
-Completed checking accuracy score 0.016s (at 419782.305)
-* Test Accuracy of SVC: 97.7%
+Start checking accuracy score (at 452182.998)
+Completed checking accuracy score 0.015s (at 452183.012)
+* Test Accuracy of SVC: 98.1%
 
-Start prediction time estimation (at 419782.305)
-Completed prediction time estimation 0.000s (at 419782.305)
-* Labels    : [0. 1. 0. 1. 0. 1. 0. 1. 1. 0.]
-* Preditions: [0. 1. 0. 1. 0. 1. 0. 1. 1. 0.]
-* Elapsed Time (10 predictions): 0.00014s
+Start prediction time estimation (at 452183.012)
+Completed prediction time estimation 0.000s (at 452183.013)
+* Labels    : [0. 1. 0. 0. 0. 0. 0. 1. 1. 0.]
+* Preditions: [0. 1. 0. 0. 0. 0. 0. 1. 1. 0.]
+* Elapsed Time (10 predictions): 0.00012s
 Pickle the trained classifier to ../results/classifier_YCrCb_sp32_hist32_hog_9_8_2_1.p
 
 ###################################
@@ -243,24 +243,24 @@ Pickle the trained classifier to ../results/classifier_YCrCb_sp32_hist32_hog_9_8
 * HOG Features: True
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on '2' HOG channel(s)
 
-Start feature extraction on dataset (at 419782.774)
-Completed feature extraction on dataset 55.862s (at 419838.637)
+Start feature extraction on dataset (at 452183.489)
+Completed feature extraction on dataset 56.735s (at 452240.224)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 419843.152)
-Completed classifier training 17.722s (at 419860.873)
+Start classifier training (at 452244.678)
+Completed classifier training 15.869s (at 452260.547)
 
-Start checking accuracy score (at 419860.873)
-Completed checking accuracy score 0.014s (at 419860.887)
-* Test Accuracy of SVC: 96.9%
+Start checking accuracy score (at 452260.547)
+Completed checking accuracy score 0.014s (at 452260.561)
+* Test Accuracy of SVC: 96.7%
 
-Start prediction time estimation (at 419860.887)
-Completed prediction time estimation 0.000s (at 419860.888)
-* Labels    : [0. 1. 1. 0. 0. 1. 0. 1. 1. 0.]
-* Preditions: [0. 1. 1. 0. 0. 1. 0. 1. 1. 0.]
-* Elapsed Time (10 predictions): 0.00016s
+Start prediction time estimation (at 452260.561)
+Completed prediction time estimation 0.000s (at 452260.561)
+* Labels    : [0. 0. 0. 0. 1. 1. 1. 0. 1. 0.]
+* Preditions: [0. 0. 0. 0. 1. 1. 1. 0. 1. 0.]
+* Elapsed Time (10 predictions): 0.00011s
 Pickle the trained classifier to ../results/classifier_YCrCb_sp32_hist32_hog_9_8_2_2.p
 
 ###################################
@@ -276,24 +276,24 @@ Pickle the trained classifier to ../results/classifier_YCrCb_sp32_hist32_hog_9_8
 * HOG Features: False
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
 
-Start feature extraction on dataset (at 419861.358)
-Completed feature extraction on dataset 12.696s (at 419874.054)
+Start feature extraction on dataset (at 452261.058)
+Completed feature extraction on dataset 12.613s (at 452273.671)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 419876.377)
-Completed classifier training 26.444s (at 419902.821)
+Start classifier training (at 452275.875)
+Completed classifier training 24.247s (at 452300.122)
 
-Start checking accuracy score (at 419902.821)
-Completed checking accuracy score 0.021s (at 419902.842)
-* Test Accuracy of SVC: 90.3%
+Start checking accuracy score (at 452300.122)
+Completed checking accuracy score 0.009s (at 452300.131)
+* Test Accuracy of SVC: 90.1%
 
-Start prediction time estimation (at 419902.842)
-Completed prediction time estimation 0.000s (at 419902.842)
-* Labels    : [1. 0. 1. 1. 1. 1. 0. 0. 0. 0.]
-* Preditions: [1. 0. 0. 1. 0. 1. 0. 1. 0. 0.]
-* Elapsed Time (10 predictions): 0.00014s
+Start prediction time estimation (at 452300.131)
+Completed prediction time estimation 0.000s (at 452300.132)
+* Labels    : [0. 1. 0. 0. 1. 0. 0. 0. 0. 1.]
+* Preditions: [0. 1. 0. 0. 1. 0. 0. 0. 0. 1.]
+* Elapsed Time (10 predictions): 0.00011s
 Pickle the trained classifier to ../results/classifier_YCrCb_sp32.p
 
 ###################################
@@ -309,23 +309,23 @@ Pickle the trained classifier to ../results/classifier_YCrCb_sp32.p
 * HOG Features: False
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
 
-Start feature extraction on dataset (at 419903.310)
-Completed feature extraction on dataset 20.460s (at 419923.770)
+Start feature extraction on dataset (at 452300.578)
+Completed feature extraction on dataset 20.069s (at 452320.646)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 419923.865)
-Completed classifier training 2.488s (at 419926.353)
+Start classifier training (at 452320.744)
+Completed classifier training 2.281s (at 452323.025)
 
-Start checking accuracy score (at 419926.353)
-Completed checking accuracy score 0.001s (at 419926.355)
-* Test Accuracy of SVC: 92.5%
+Start checking accuracy score (at 452323.025)
+Completed checking accuracy score 0.001s (at 452323.026)
+* Test Accuracy of SVC: 92.2%
 
-Start prediction time estimation (at 419926.355)
-Completed prediction time estimation 0.000s (at 419926.355)
-* Labels    : [1. 1. 1. 0. 1. 0. 0. 1. 1. 1.]
-* Preditions: [1. 0. 1. 0. 1. 0. 0. 1. 0. 1.]
+Start prediction time estimation (at 452323.026)
+Completed prediction time estimation 0.000s (at 452323.027)
+* Labels    : [0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
+* Preditions: [0. 0. 1. 0. 0. 0. 0. 1. 0. 0.]
 * Elapsed Time (10 predictions): 0.00007s
 Pickle the trained classifier to ../results/classifier_YCrCb_hist32.p
 
@@ -342,22 +342,22 @@ Pickle the trained classifier to ../results/classifier_YCrCb_hist32.p
 * HOG Features: True
   - using 9 orientations, 8 pixels per cell, and 2 cells per block on 'ALL' HOG channel(s)
 
-Start feature extraction on dataset (at 419926.761)
-Completed feature extraction on dataset 125.376s (at 420052.137)
+Start feature extraction on dataset (at 452323.432)
+Completed feature extraction on dataset 116.324s (at 452439.756)
 * Total Dataset: 17760
 * Total Training Dataset: 14208
 * Total Test Dataset: 3552
 
-Start classifier training (at 420057.697)
-Completed classifier training 21.320s (at 420079.017)
+Start classifier training (at 452444.583)
+Completed classifier training 17.528s (at 452462.111)
 
-Start checking accuracy score (at 420079.017)
-Completed checking accuracy score 0.019s (at 420079.036)
+Start checking accuracy score (at 452462.111)
+Completed checking accuracy score 0.015s (at 452462.126)
 * Test Accuracy of SVC: 96.7%
 
-Start prediction time estimation (at 420079.036)
-Completed prediction time estimation 0.000s (at 420079.036)
-* Labels    : [0. 1. 1. 0. 1. 0. 1. 1. 1. 0.]
-* Preditions: [1. 1. 1. 0. 1. 0. 1. 1. 1. 0.]
-* Elapsed Time (10 predictions): 0.00015s
+Start prediction time estimation (at 452462.126)
+Completed prediction time estimation 0.000s (at 452462.126)
+* Labels    : [0. 1. 1. 1. 0. 0. 0. 1. 0. 1.]
+* Preditions: [0. 1. 1. 1. 0. 1. 0. 1. 0. 1.]
+* Elapsed Time (10 predictions): 0.00016s
 Pickle the trained classifier to ../results/classifier_YCrCb_hog_9_8_2_ALL.p

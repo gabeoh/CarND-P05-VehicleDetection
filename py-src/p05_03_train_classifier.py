@@ -129,6 +129,7 @@ def perform_classifier_training(
         'classifier': classifier,
         'feature_scaler': feature_scaler,
         'accuracy': accuracy_score,
+        'cspace': cspace,
         'spatial_feat': spatial_feat,
         'hist_feat': hist_feat,
         'hog_feat': hog_feat,
@@ -161,11 +162,11 @@ if __name__ == '__main__':
 
     param_space = (
         ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
-        ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 0),
         ('LUV', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
         ('YUV', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
-        ('HLS', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
         ('HSV', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
+        ('HLS', True, True, True, (32, 32), 32, 9, 8, 2, 'ALL'),
+        ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 0),
         ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 1),
         ('YCrCb', True, True, True, (32, 32), 32, 9, 8, 2, 2),
         ('YCrCb', True, False, False, (32, 32), 32, 9, 8, 2, 'ALL'),
