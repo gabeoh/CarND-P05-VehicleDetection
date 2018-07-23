@@ -1,10 +1,11 @@
 #%% Initialization
 import os
-import pickle
 import argparse
+import cv2
+import pickle
 from moviepy.editor import VideoFileClip
 
-from my_util import print_section_header, analyze_test_image
+from my_util import print_section_header, analyze_test_image, draw_bounding_boxes
 import p05_01_correct_distortion as dist_correct
 import p05_02_feature_extraction as feat_ext
 import p05_03_train_classifier as train_class
@@ -23,6 +24,8 @@ feat_ext_img_dir = output_dir + 'feat_extract/'
 undistorted_img_dir = output_dir + 'undistorted/'
 slide_win_dir = output_dir + 'slide_win/'
 slide_search_dir = output_dir + 'slide_search/'
+heat_map_dir = output_dir + 'heat_map/'
+detection_dir = output_dir + 'vehicle_detection/'
 
 binary_lane_dir = output_dir + 'binary_lanes/'
 perspective_trans_dir = output_dir + 'perspective/'
@@ -61,7 +64,23 @@ def detect_vehicle_images(img_files, steps):
     # Step 5 - Slide Window Vehicle Search
     if (not steps) or (5 in steps):
         pickle_file = results_dir + 'classifier_YCrCb_sp32_hist32_hog_9_8_2_ALL.p'
-        slide_search.perform_slide_window_search(undistorted_img_dir, img_files, slide_search_dir, pickle_file)
+        slide_search.perform_slide_window_search(undistorted_img_dir, img_files, pickle_file, slide_search_dir,
+                                                 heat_map_dir, detection_dir)
+
+
+#%% Run all pipeline steps
+def run_all_steps(img, steps, camera_mtx, dist_coeffs, class_pickle):
+
+    # Step 1 - Correct image distortion
+    if (not steps) or (1 in steps):
+        img = dist_correct.correct_image_distortion(img, camera_mtx, dist_coeffs)
+
+    # Step 5 - Slide Window Vehicle Search
+    if (not steps) or (5 in steps):
+        bbox_list = slide_search.find_vehicle_bounding_boxes(img, class_pickle)
+        img = draw_bounding_boxes(img, bbox_list)
+
+    return img
 
 
 #%% Run lane detection on provided video
@@ -71,19 +90,23 @@ def detect_vehicle_video(video_files, steps):
     print('Video Files: ', video_files)
 
     # Load distortion correction parameters
-    pickle_file = results_dir + 'camera_cal.p'
-    with open(pickle_file, 'rb') as inf:
-        camera_cal = pickle.load(inf)
-    camera_mtx = camera_cal['camera_matrix']
-    dist_coeffs = camera_cal['distortion_coefficients']
+    pickle_file_camera = results_dir + 'camera_cal.p'
+    with open(pickle_file_camera, 'rb') as in_file:
+        camera_pickle = pickle.load(in_file)
+    camera_mtx = camera_pickle['camera_matrix']
+    dist_coeffs = camera_pickle['distortion_coefficients']
 
-    # Get matrices for perspective transform and its reverse operation
-    # mtx_trans, mtx_trans_inv = p_trans.compute_perspective_transform_matrix()
+    # Load trained classifier
+    pickle_file_class = '../results/classifier_YCrCb_sp32_hist32_hog_9_8_2_ALL.p'
+    with open(pickle_file_class, 'rb') as in_file:
+        class_pickle = pickle.load(in_file)
 
+    # Determine list of files to process
+    if len(video_files) == 0:
+        video_files = sorted(os.listdir(test_video_dir))
+        video_files = [f for f in video_files if not f.startswith('.')]
 
-    videos = sorted(os.listdir(test_video_dir))
-    videos = [f for f in videos if f.endswith('.mp4') and (len(video_files) == 0 or f in video_files)]
-    for video_file in videos:
+    for video_file in video_files:
         video_path = test_video_dir + video_file
         video_out_path = video_dst_dir + video_file
         print_section_header("Run lane detection on video - {}".format(video_file), 60)
@@ -91,11 +114,13 @@ def detect_vehicle_video(video_files, steps):
         # Use subclip() to test with shorter video (the first 5 seconds for example)
         # clip = VideoFileClip(video_path).subclip(38,42)
         clip = VideoFileClip(video_path)
-        prev_polys = [None, None]
+        clip_processed = clip.fl_image(
+            lambda img: run_all_steps(img, steps, camera_mtx, dist_coeffs, class_pickle))
+        # prev_polys = [None, None]
         # clip_processed = clip.fl_image(lambda img: over_annot.overlay_lane_lines(img, camera_mtx, dist_coeffs, mtx_trans, mtx_trans_inv, prev_polys))
 
         # Write line detected videos to files
-        # clip_processed.write_videofile(video_out_path, audio=False)
+        clip_processed.write_videofile(video_out_path, audio=False)
 
 
 if __name__ == '__main__':
