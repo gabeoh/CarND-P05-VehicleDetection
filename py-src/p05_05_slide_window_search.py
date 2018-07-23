@@ -123,6 +123,54 @@ def get_bounding_boxes_from_labels(labels):
     # Return bonding boxes
     return bbox_list
 
+def find_vehicle_bounding_boxes(img, class_pickle, img_name=None, out_dir_slide=None,
+                                out_dir_heat=None, out_dir_detect=None):
+    # Read an image file and correct distortions
+
+    bbox_list = search_vehicle(img, y_start=360, y_stop=680,
+                               classifier=class_pickle['classifier'], feature_scaler=class_pickle['feature_scaler'],
+                               cspace=class_pickle['cspace'],
+                               spatial_feat=class_pickle['spatial_feat'],
+                               hist_feat=class_pickle['hist_feat'], hog_feat=class_pickle['hog_feat'],
+                               spatial_size=class_pickle['spatial_size'], hist_bins=class_pickle['hist_bins'],
+                               orient=class_pickle['orient'], pix_per_cell=class_pickle['pix_per_cell'],
+                               cell_per_block=class_pickle['cell_per_block'], hog_channel=class_pickle['hog_channel'])
+
+    # Store raw slide window search results
+    if out_dir_slide is not None:
+        out_img = draw_bounding_boxes(img, bbox_list)
+        out_file = out_dir_slide + img_name + '.jpg'
+        print("Store raw sliding search image to {}".format(out_file))
+        cv2.imwrite(out_file, cv2.cvtColor(out_img, cv2.COLOR_RGB2BGR))
+
+    # Initialize heat_map to the same size as img (with zeros)
+    heat_map = np.zeros_like(img[:, :, 0]).astype(np.float)
+    # Add heat to each box in box list
+    heat_map = add_heat(heat_map, bbox_list)
+    # Apply threshold to filter out false positives
+    heat_threshold = 4
+    heat_map[heat_map <= heat_threshold] = 0
+    # Store heat-map image
+    if out_dir_heat is not None:
+        # Normalize heat map to [0, 255] for visualization
+        max_heat = np.max(heat_map)
+        heat_map_out = heat_map
+        if max_heat > 0:
+            heat_map_out = (heat_map_out * 255 / max_heat).astype(np.uint8)
+        out_file = out_dir_heat + img_name + '.jpg'
+        print("Store heat-map image to {}".format(out_file))
+        cv2.imwrite(out_file, heat_map_out)
+
+    # Find final boxes from heatmap using label function
+    box_labels = label(heat_map)
+    bbox_list_final = get_bounding_boxes_from_labels(box_labels)
+    if out_dir_detect is not None:
+        out_img = draw_bounding_boxes(img, bbox_list_final)
+        out_file = out_dir_detect + img_name + '.jpg'
+        print("Store the image with vehicle detection to {}".format(out_file))
+        cv2.imwrite(out_file, cv2.cvtColor(out_img, cv2.COLOR_RGB2BGR))
+    return bbox_list_final
+
 def perform_slide_window_search(img_dir, img_files, pickle_file, out_dir_slide=None,
                                 out_dir_heat=None, out_dir_detect=None):
     print_section_header("Slide Window Vehicle Search")
@@ -137,53 +185,10 @@ def perform_slide_window_search(img_dir, img_files, pickle_file, out_dir_slide=N
         img_files = [f for f in img_files if not f.startswith('.')]
 
     for img_file in img_files:
-        # Read an image file and correct distortions
         img_name = img_file.split('.')[0]
         img_path = img_dir + img_file
         img = mpimg.imread(img_path)
-        bbox_list = search_vehicle(img, y_start=360, y_stop=680,
-                       classifier=class_pickle['classifier'], feature_scaler=class_pickle['feature_scaler'],
-                       cspace=class_pickle['cspace'],
-                       spatial_feat=class_pickle['spatial_feat'],
-                       hist_feat=class_pickle['hist_feat'], hog_feat=class_pickle['hog_feat'],
-                       spatial_size=class_pickle['spatial_size'], hist_bins=class_pickle['hist_bins'],
-                       orient=class_pickle['orient'], pix_per_cell=class_pickle['pix_per_cell'],
-                       cell_per_block=class_pickle['cell_per_block'], hog_channel=class_pickle['hog_channel'])
-
-        # Store raw slide window search results
-        if out_dir_slide is not None:
-            out_img = draw_bounding_boxes(img, bbox_list)
-            out_file = out_dir_slide + img_name + '.jpg'
-            print("Store raw sliding search image to {}".format(out_file))
-            cv2.imwrite(out_file, cv2.cvtColor(out_img, cv2.COLOR_RGB2BGR))
-
-        # Initialize heat_map to the same size as img (with zeros)
-        heat_map = np.zeros_like(img[:, :, 0]).astype(np.float)
-        # Add heat to each box in box list
-        heat_map = add_heat(heat_map, bbox_list)
-        # Apply threshold to filter out false positives
-        heat_threshold = 4
-        heat_map[heat_map <= heat_threshold] = 0
-        # Store heat-map image
-        if out_dir_heat is not None:
-            # Normalize heat map to [0, 255] for visualization
-            max_heat = np.max(heat_map)
-            heat_map_out = heat_map
-            if max_heat > 0:
-                heat_map_out = (heat_map_out * 255 / max_heat).astype(np.uint8)
-            out_file = out_dir_heat + img_name + '.jpg'
-            print("Store heat-map image to {}".format(out_file))
-            cv2.imwrite(out_file, heat_map_out)
-
-        # Find final boxes from heatmap using label function
-        box_labels = label(heat_map)
-        bbox_list_final = get_bounding_boxes_from_labels(box_labels)
-        if out_dir_detect is not None:
-            out_img = draw_bounding_boxes(img, bbox_list_final)
-            out_file = out_dir_detect + img_name + '.jpg'
-            print("Store the image with vehicle detection to {}".format(out_file))
-            cv2.imwrite(out_file, cv2.cvtColor(out_img, cv2.COLOR_RGB2BGR))
-
+        find_vehicle_bounding_boxes(img, class_pickle, img_name, out_dir_slide, out_dir_heat, out_dir_detect)
 
 if __name__ == '__main__':
     # Step 5 - Slide Window Vehicle Search
