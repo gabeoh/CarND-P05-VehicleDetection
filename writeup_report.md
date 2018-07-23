@@ -98,7 +98,7 @@ The source code that determines slide window position is in
 [py-src/p05_04_determine_slide_window.py](py-src/p05_04_determine_slide_window.py).
 
 First, the positions of slide windows are determined.
-Five window sizes, which vary from (50, 50) to (320, 280), are used.
+Five window sizes, which vary from (64, 64) to (320, 320), are used.
 The upper parts (about half) of the images are disregarded because a vehicle
 does not appear there.
 From the remainder, some lower parts are also disregarded
@@ -114,7 +114,7 @@ The image below shows slide window positions for each window size.
 ![Slide Window Positions][img_slide_win_01]
 
 
-### 2. Vehicle Detection
+### 2. Slide Window Vehicle Search
 
 
 **Describe how (and identify where in your code) you implemented a sliding 

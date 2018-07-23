@@ -58,14 +58,14 @@ def find_slide_windows(img, x_start_stop=[None, None], y_start_stop=[None, None]
     # Return the list of windows
     return window_list
 
-def get_window_metrics():
+def get_window_metrics(y_start=370):
     # window_metrics = [(xy_window, x_start_stop, y_start_stop, overlap), ...]
     window_metrics = [
-        ((320, 280), [None, None], [400, 680], 0.75),
-        ((200, 180), [15, None], [400, 670], 0.75),
-        ((120, 120), [10, None], [400, 640], 0.75),
-        ((80, 80), [None, None], [400, 560], 0.5),
-        ((50, 50), [3, None], [400, 500], 0.5),
+        ((320, 320), [None, None], [y_start, y_start + 320], 0.75),
+        ((200, 200), [15, None], [y_start + 20, y_start + 320], 0.75),
+        ((120, 120), [10, None], [y_start + 30, y_start + 270], 0.75),
+        ((80, 80), [None, None], [y_start + 30, y_start + 190], 0.5),
+        ((64, 64), [None, None], [y_start + 30, y_start + 158], 0.5),
     ]
     return window_metrics
 
