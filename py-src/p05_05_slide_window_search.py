@@ -98,16 +98,15 @@ def search_vehicle(img, y_start, y_stop,
                 if test_prediction == 1:
                     x_left_orig = np.int(x_left * scale + x_start_stop[0])
                     y_top_orig = np.int(y_top * scale + y_start + y_start_stop[0])
-                    win_size_orig = np.int(win_size)
                     bbox_list.append((
                         (x_left_orig, y_top_orig),
-                        (x_left_orig + win_size_orig, y_top_orig + win_size_orig)))
+                        (x_left_orig + win_size, y_top_orig + win_size)))
     return bbox_list
 
-def add_heat(heat_map, bbox_list):
+def add_heat(heat_map, bbox_list, heat_contribution=1, heat_map_factor=1.0):
     # Increment heat value for the areas inside of bounding boxes
     for box in bbox_list:
-        heat_map[box[0][1]:box[1][1], box[0][0]:box[1][0]] += 1
+        heat_map[box[0][1]:box[1][1], box[0][0]:box[1][0]] += heat_contribution * heat_map_factor
     # Return updated heatmap
     return heat_map
 
@@ -123,11 +122,10 @@ def get_bounding_boxes_from_labels(labels):
     # Return bonding boxes
     return bbox_list
 
-def find_vehicle_bounding_boxes(img, class_pickle, img_name=None, out_dir_slide=None,
-                                out_dir_heat=None, out_dir_detect=None):
-    # Read an image file and correct distortions
+def find_vehicle_bounding_boxes(img, class_pickle, prev_frame_data=None, img_name=None,
+                                out_dir_slide=None, out_dir_heat=None, out_dir_detect=None):
 
-    bbox_list = search_vehicle(img, y_start=360, y_stop=680,
+    bbox_list = search_vehicle(img, y_start=400, y_stop=656,
                                classifier=class_pickle['classifier'], feature_scaler=class_pickle['feature_scaler'],
                                cspace=class_pickle['cspace'],
                                spatial_feat=class_pickle['spatial_feat'],
@@ -143,12 +141,21 @@ def find_vehicle_bounding_boxes(img, class_pickle, img_name=None, out_dir_slide=
         print("Store raw sliding search image to {}".format(out_file))
         cv2.imwrite(out_file, cv2.cvtColor(out_img, cv2.COLOR_RGB2BGR))
 
-    # Initialize heat_map to the same size as img (with zeros)
-    heat_map = np.zeros_like(img[:, :, 0]).astype(np.float)
+    # Check if heat-map is given from previous frame
+    heat_contribution_factor = 1.0
+    heat_contribution_factor_prev = 0.5
+    if prev_frame_data is not None and prev_frame_data['heat_map'] is not None:
+        heat_map = prev_frame_data['heat_map'] * heat_contribution_factor_prev
+        heat_contribution_factor -= heat_contribution_factor_prev
+    else:
+        # Initialize heat_map to the same size as img (with zeros)
+        heat_map = np.zeros_like(img[:, :, 0]).astype(np.float)
+
     # Add heat to each box in box list
-    heat_map = add_heat(heat_map, bbox_list)
+    heat_multiplier = 12
+    heat_map = add_heat(heat_map, bbox_list, heat_multiplier, heat_contribution_factor)
     # Apply threshold to filter out false positives
-    heat_threshold = 4
+    heat_threshold = 4 * heat_multiplier
     heat_map[heat_map <= heat_threshold] = 0
     # Store heat-map image
     if out_dir_heat is not None:
@@ -160,6 +167,8 @@ def find_vehicle_bounding_boxes(img, class_pickle, img_name=None, out_dir_slide=
         out_file = out_dir_heat + img_name + '.jpg'
         print("Store heat-map image to {}".format(out_file))
         cv2.imwrite(out_file, heat_map_out)
+    if prev_frame_data is not None:
+        prev_frame_data['heat_map'] = heat_map
 
     # Find final boxes from heatmap using label function
     box_labels = label(heat_map)
@@ -188,7 +197,7 @@ def perform_slide_window_search(img_dir, img_files, pickle_file, out_dir_slide=N
         img_name = img_file.split('.')[0]
         img_path = img_dir + img_file
         img = mpimg.imread(img_path)
-        find_vehicle_bounding_boxes(img, class_pickle, img_name, out_dir_slide, out_dir_heat, out_dir_detect)
+        find_vehicle_bounding_boxes(img, class_pickle, None, img_name, out_dir_slide, out_dir_heat, out_dir_detect)
 
 if __name__ == '__main__':
     # Step 5 - Slide Window Vehicle Search
