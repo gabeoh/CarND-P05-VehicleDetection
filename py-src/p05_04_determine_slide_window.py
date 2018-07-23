@@ -64,8 +64,8 @@ def get_window_metrics(y_start=360):
         (320, [0, 1280], [y_start, y_start + 320], 0.75),
         (192, [24, 1280], [y_start + 24, y_start + 312], 0.75),
         (128, [0, 1280], [y_start + 32, y_start + 288], 0.75),
-        (80, [0, 1280], [y_start + 40, y_start + 240], 0.5),
-        (64, [0, 1280], [y_start + 40, y_start + 168], 0.5),
+        (80, [0, 1280], [y_start + 40, y_start + 240], 0.75),
+        (64, [0, 1280], [y_start + 40, y_start + 168], 0.75),
     ]
     return window_metrics
 
