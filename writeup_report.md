@@ -22,6 +22,7 @@ the vehicles by creating a heat map of recurring detections across frames.
 [img_feat_ext_02]: ./output_images/feat_extract/color_hist_3605_981.jpg
 [img_feat_ext_03]: ./output_images/feat_extract/hog_feature_3605_981.jpg
 [img_slide_win_01]: ./output_images/slide_win/test6.jpg
+[img_slide_search_01]: ./output_images/slide_search/test1.jpg
 
 [image1]: ./examples/car_not_car.png
 [image2]: ./examples/HOG_example.jpg
@@ -115,36 +116,36 @@ The image below shows slide window positions for each window size.
 
 
 ### 2. Slide Window Vehicle Search
+The source code for slide window vehicle search is located in
+[py-src/p05_05_slide_window_search.py](py-src/p05_05_slide_window_search.py).
 
+At each slide window position determined in the previous step, the image
+under the slide window is converted to `YCrCb` color space and
+resized to `64x64` scale in order to match the trained classifier.
+Then, the trained classifier is used to predict whether the image
+represents vehicle pixels or not.
 
-**Describe how (and identify where in your code) you implemented a sliding 
-window search.  How did you decide what scales to search and how much to 
-overlap windows?**
+The classifier uses binned spatial features, color histogram, and HOG features
+to predict the image classification.
 
-_A sliding window approach has been implemented, where overlapping tiles in 
-each test image are classified as vehicle or non-vehicle. Some justification 
-has been given for the particular implementation chosen._
+The slide window search results of test images are located under:
+[output_imgages/slide_search/](output_imgages/slide_search)
 
-I decided to search random window positions at random scales all over the 
-image and came up with this (ok just kidding I didn't actually ;):
+An example image is included below.
+![Slide Window Search][img_slide_search_01]
 
-![alt text][image3]
+#### Performance Enhancement
+Extracting HOG feature is the most expensive (time consuming) operation
+during the slide window search.  Since overlaps exist among neighboring
+slide windows, it would be inefficient to compute HOG feature at each 
+slide window.
 
-
-
-**Show some examples of test images to demonstrate how your pipeline is 
-working. How did you optimize the performance of your classifier?**
-
-_Some discussion is given around how you improved the reliability of the 
-classifier i.e., fewer false positives and more reliable car detections 
-(this could be things like choice of feature vector, thresholding the 
-decision function, hard negative mining etc.)_
-
-Ultimately I searched on two scales using YCrCb 3-channel HOG features 
-plus spatially binned color and histograms of color in the feature vector, 
-which provided a nice result.  Here are some example images:
-
-![alt text][image4]
+Instead, the HOG features are extracted for the entire region of interest
+at each image scale.
+Then, bounding boxes for the slide windows are mapped to the HOG feature
+block dimensions.
+This technique significantly reduces the number of HOG feature extractions
+and therefore improves the pipeline run-time performance.
 
 
 ---
