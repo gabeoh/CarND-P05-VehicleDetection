@@ -22,7 +22,9 @@ the vehicles by creating a heat map of recurring detections across frames.
 [img_feat_ext_02]: ./output_images/feat_extract/color_hist_3605_981.jpg
 [img_feat_ext_03]: ./output_images/feat_extract/hog_feature_3605_981.jpg
 [img_slide_win_01]: ./output_images/slide_win/test6.jpg
-[img_slide_search_01]: ./output_images/slide_search/test1.jpg
+[img_slide_search_01]: ./output_images/slide_search/test6.jpg
+[img_heat_map_01]: ./output_images/heat_map/test6.jpg
+[img_vehicle_detection_01]: ./output_images/vehicle_detection/test6.jpg
 
 [image1]: ./examples/car_not_car.png
 [image2]: ./examples/HOG_example.jpg
@@ -105,10 +107,8 @@ does not appear there.
 From the remainder, some lower parts are also disregarded
 as the window size reduces because smaller vehicle images do not
 appear on the lower parts of the view.
-
-For bigger windows, the overlap ratio of 0.75 is used.  For the smallest
-two windows, the ratio is reduced to 0.5 because even the reduced overlap
-yields enough granularity for the smaller window sizes.
+The overlap ratio of 0.75 is used.  In other words, the detection window
+moves in a step size of the quarter of the window size.
 
 The image below shows slide window positions for each window size.
 
@@ -119,6 +119,7 @@ The image below shows slide window positions for each window size.
 The source code for slide window vehicle search is located in
 [py-src/p05_05_slide_window_search.py](py-src/p05_05_slide_window_search.py).
 
+#### Slide Window Search
 At each slide window position determined in the previous step, the image
 under the slide window is converted to `YCrCb` color space and
 resized to `64x64` scale in order to match the trained classifier.
@@ -133,6 +134,33 @@ The slide window search results of test images are located under:
 
 An example image is included below.
 ![Slide Window Search][img_slide_search_01]
+
+#### Heat Map
+The search result shown above contains multiple detections on a single
+vehicle and also some false positives.  In order to improve the prediction
+accuracy, a heat-map technique is used.
+
+The heat-map threshold of 4 is used in this implementation.  In other words,
+a pixel is identified as a vehicle only when more than four detections are
+found.
+
+Then, `scipy.ndimage.measurements.label()` function is used to determine
+the final vehicle bounding boxes from the heat-map.
+
+The heat-map result of each test images is located under:
+[output_imgages/heat_map/](output_imgages/heat_map)
+
+An example image is shown below.
+![Heat Map][img_heat_map_01]
+
+#### Final Vehicle Detection
+
+The final vehicle detected images are located under:
+[output_imgages/vehicle_detection/](output_imgages/vehicle_detection)
+
+An example image is shown below.
+![Vehicle Detection][img_vehicle_detection_01]
+
 
 #### Performance Enhancement
 Extracting HOG feature is the most expensive (time consuming) operation
