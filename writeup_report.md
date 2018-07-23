@@ -21,6 +21,7 @@ the vehicles by creating a heat map of recurring detections across frames.
 [img_feat_ext_01]: ./output_images/feat_extract/sample_image_3605_981.jpg
 [img_feat_ext_02]: ./output_images/feat_extract/color_hist_3605_981.jpg
 [img_feat_ext_03]: ./output_images/feat_extract/hog_feature_3605_981.jpg
+[img_slide_win_01]: ./output_images/slide_win/test6.jpg
 
 [image1]: ./examples/car_not_car.png
 [image2]: ./examples/HOG_example.jpg
@@ -92,6 +93,30 @@ train classifier output logs,
 ---
 ## Sliding Window Search
 
+### 1. Determine Slide Window Positions
+The source code that determines slide window position is in
+[py-src/p05_04_determine_slide_window.py](py-src/p05_04_determine_slide_window.py).
+
+First, the positions of slide windows are determined.
+Five window sizes, which vary from (50, 50) to (320, 280), are used.
+The upper parts (about half) of the images are disregarded because a vehicle
+does not appear there.
+From the remainder, some lower parts are also disregarded
+as the window size reduces because smaller vehicle images do not
+appear on the lower parts of the view.
+
+For bigger windows, the overlap ratio of 0.75 is used.  For the smallest
+two windows, the ratio is reduced to 0.5 because even the reduced overlap
+yields enough granularity for the smaller window sizes.
+
+The image below shows slide window positions for each window size.
+
+![Slide Window Positions][img_slide_win_01]
+
+
+### 2. Vehicle Detection
+
+
 **Describe how (and identify where in your code) you implemented a sliding 
 window search.  How did you decide what scales to search and how much to 
 overlap windows?**
@@ -104,6 +129,7 @@ I decided to search random window positions at random scales all over the
 image and came up with this (ok just kidding I didn't actually ;):
 
 ![alt text][image3]
+
 
 
 **Show some examples of test images to demonstrate how your pipeline is 

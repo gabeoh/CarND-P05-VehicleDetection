@@ -8,6 +8,7 @@ from my_util import print_section_header, analyze_test_image
 import p05_01_correct_distortion as dist_correct
 import p05_02_feature_extraction as feat_ext
 import p05_03_train_classifier as train_class
+import p05_04_determine_slide_window as deter_win
 
 project_root_dir = '../'
 output_dir = project_root_dir + 'output_images/'
@@ -30,11 +31,6 @@ video_dst_dir = output_dir + 'video/'
 def detect_vehicle_images(img_files, steps):
     print("\n** Running lane detection on test images **")
 
-    # Determine list of files to process
-    if len(img_files) == 0:
-        img_files = sorted(os.listdir(test_img_dir))
-        img_files = [f for f in img_files if not f.startswith('.')]
-
     # Step 0 - Analyze test image
     if (not steps) or (0 in steps):
         img_file = img_files[0]
@@ -54,6 +50,10 @@ def detect_vehicle_images(img_files, steps):
     # Step 3 - Train classifier
     if (not steps) or (3 in steps):
         train_class.perform_classifier_training(vehicle_img_dir, non_vehicle_img_dir, results_dir)
+
+    # Step 4 - Determine slide window positions
+    if (not steps) or (4 in steps):
+        deter_win.determine_window_positions(undistorted_img_dir, img_files, slide_win_dir)
 
 
 #%% Run lane detection on provided video
