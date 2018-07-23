@@ -9,6 +9,7 @@ import p05_01_correct_distortion as dist_correct
 import p05_02_feature_extraction as feat_ext
 import p05_03_train_classifier as train_class
 import p05_04_determine_slide_window as deter_win
+import p05_05_slide_window_search as slide_search
 
 project_root_dir = '../'
 output_dir = project_root_dir + 'output_images/'
@@ -20,9 +21,11 @@ test_img_dir = project_root_dir + 'test_images/'
 test_video_dir = project_root_dir + 'test_videos/'
 feat_ext_img_dir = output_dir + 'feat_extract/'
 undistorted_img_dir = output_dir + 'undistorted/'
+slide_win_dir = output_dir + 'slide_win/'
+slide_search_dir = output_dir + 'slide_search/'
+
 binary_lane_dir = output_dir + 'binary_lanes/'
 perspective_trans_dir = output_dir + 'perspective/'
-slide_win_dir = output_dir + 'slide_win/'
 overlay_dir = output_dir + 'overlay/'
 video_dst_dir = output_dir + 'video/'
 
@@ -54,6 +57,11 @@ def detect_vehicle_images(img_files, steps):
     # Step 4 - Determine slide window positions
     if (not steps) or (4 in steps):
         deter_win.determine_window_positions(undistorted_img_dir, img_files, slide_win_dir)
+
+    # Step 5 - Slide Window Vehicle Search
+    if (not steps) or (5 in steps):
+        pickle_file = results_dir + 'classifier_YCrCb_sp32_hist32_hog_9_8_2_ALL.p'
+        slide_search.perform_slide_window_search(undistorted_img_dir, img_files, slide_search_dir, pickle_file)
 
 
 #%% Run lane detection on provided video

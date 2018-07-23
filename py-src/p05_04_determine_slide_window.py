@@ -58,14 +58,14 @@ def find_slide_windows(img, x_start_stop=[None, None], y_start_stop=[None, None]
     # Return the list of windows
     return window_list
 
-def get_window_metrics(y_start=370):
+def get_window_metrics(y_start=360):
     # window_metrics = [(xy_window, x_start_stop, y_start_stop, overlap), ...]
     window_metrics = [
-        ((320, 320), [None, None], [y_start, y_start + 320], 0.75),
-        ((200, 200), [15, None], [y_start + 20, y_start + 320], 0.75),
-        ((120, 120), [10, None], [y_start + 30, y_start + 270], 0.75),
-        ((80, 80), [None, None], [y_start + 30, y_start + 190], 0.5),
-        ((64, 64), [None, None], [y_start + 30, y_start + 158], 0.5),
+        (320, [0, 1280], [y_start, y_start + 320], 0.75),
+        (192, [24, 1280], [y_start + 24, y_start + 312], 0.75),
+        (128, [0, 1280], [y_start + 32, y_start + 288], 0.75),
+        (80, [0, 1280], [y_start + 40, y_start + 240], 0.5),
+        (64, [0, 1280], [y_start + 40, y_start + 168], 0.5),
     ]
     return window_metrics
 
@@ -89,7 +89,8 @@ def determine_window_positions(img_dir, img_files, out_dir):
 
         fig, sub_plts = plt.subplots(2, 3, figsize=(18, 9))
         i_win = 0
-        for xy_window, x_start_stop, y_start_stop, overlap in window_metrics:
+        for win_size, x_start_stop, y_start_stop, overlap in window_metrics:
+            xy_window = (win_size, win_size)
             window_list = find_slide_windows(img, x_start_stop=x_start_stop, y_start_stop=y_start_stop,
                                              xy_window=xy_window, xy_overlap=(overlap, overlap))
             img_boxed = draw_boxes(img, window_list, color=(0, 0, 255), thick=3)
