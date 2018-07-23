@@ -69,7 +69,7 @@ def detect_vehicle_images(img_files, steps):
 
 
 #%% Run all pipeline steps
-def run_all_steps(img, steps, camera_mtx, dist_coeffs, class_pickle):
+def run_all_steps(img, steps, camera_mtx, dist_coeffs, class_pickle, prev_frame_data):
 
     # Step 1 - Correct image distortion
     if (not steps) or (1 in steps):
@@ -77,7 +77,7 @@ def run_all_steps(img, steps, camera_mtx, dist_coeffs, class_pickle):
 
     # Step 5 - Slide Window Vehicle Search
     if (not steps) or (5 in steps):
-        bbox_list = slide_search.find_vehicle_bounding_boxes(img, class_pickle)
+        bbox_list = slide_search.find_vehicle_bounding_boxes(img, class_pickle, prev_frame_data)
         img = draw_bounding_boxes(img, bbox_list)
 
     return img
@@ -111,13 +111,15 @@ def detect_vehicle_video(video_files, steps):
         video_out_path = video_dst_dir + video_file
         print_section_header("Run lane detection on video - {}".format(video_file), 60)
 
+        # Data structure to track information from previous frame
+        prev_frame_data = {
+            'heat_map': None
+        }
         # Use subclip() to test with shorter video (the first 5 seconds for example)
-        # clip = VideoFileClip(video_path).subclip(38,42)
+        # clip = VideoFileClip(video_path).subclip(34, 43)
         clip = VideoFileClip(video_path)
         clip_processed = clip.fl_image(
-            lambda img: run_all_steps(img, steps, camera_mtx, dist_coeffs, class_pickle))
-        # prev_polys = [None, None]
-        # clip_processed = clip.fl_image(lambda img: over_annot.overlay_lane_lines(img, camera_mtx, dist_coeffs, mtx_trans, mtx_trans_inv, prev_polys))
+            lambda img: run_all_steps(img, steps, camera_mtx, dist_coeffs, class_pickle, prev_frame_data))
 
         # Write line detected videos to files
         clip_processed.write_videofile(video_out_path, audio=False)

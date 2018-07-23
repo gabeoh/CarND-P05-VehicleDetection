@@ -58,14 +58,13 @@ def find_slide_windows(img, x_start_stop=[None, None], y_start_stop=[None, None]
     # Return the list of windows
     return window_list
 
-def get_window_metrics(y_start=360):
+def get_window_metrics(y_start=400):
     # window_metrics = [(xy_window, x_start_stop, y_start_stop, overlap), ...]
     window_metrics = [
-        (320, [0, 1280], [y_start, y_start + 320], 0.75),
-        (192, [24, 1280], [y_start + 24, y_start + 312], 0.75),
-        (128, [0, 1280], [y_start + 32, y_start + 288], 0.75),
-        (80, [0, 1280], [y_start + 40, y_start + 240], 0.75),
-        (64, [0, 1280], [y_start + 40, y_start + 168], 0.75),
+        (256, [384, 1280], [y_start, y_start + 256], 0.75),
+        (128, [448, 1280], [y_start, y_start + 256], 0.75),
+        (80, [480, 1280], [y_start, y_start + 200], 0.75),
+        (64, [512, 1280], [y_start, y_start + 160], 0.75),
     ]
     return window_metrics
 
@@ -87,7 +86,7 @@ def determine_window_positions(img_dir, img_files, out_dir):
         img = mpimg.imread(img_path)
         img = np.copy(img)
 
-        fig, sub_plts = plt.subplots(2, 3, figsize=(18, 9))
+        fig, sub_plts = plt.subplots(2, 2, figsize=(18, 9))
         i_win = 0
         for win_size, x_start_stop, y_start_stop, overlap in window_metrics:
             xy_window = (win_size, win_size)
@@ -96,13 +95,12 @@ def determine_window_positions(img_dir, img_files, out_dir):
             img_boxed = draw_boxes(img, window_list, color=(0, 0, 255), thick=3)
             img_boxed = draw_boxes(img_boxed, window_list[2:3], color=(255, 0, 0), thick=6)
 
-            sub_plts[i_win // 3, i_win % 3].set_title("Window Size: {}".format(xy_window), fontsize=20)
-            sub_plts[i_win // 3, i_win % 3].imshow(img_boxed)
+            sub_plts[i_win // 2, i_win % 2].set_title("Window Size: {}".format(xy_window), fontsize=20)
+            sub_plts[i_win // 2, i_win % 2].imshow(img_boxed)
             i_win += 1
         # Save slide window plot
-        sub_plts[-1, -1].axis('off')
         fig.tight_layout()
-        fig.subplots_adjust(left=0.05, right=0.98, top=1, bottom=0.)
+        fig.subplots_adjust(left=0.02, right=0.99, top=0.95, bottom=0.03)
         out_file = "{}{}.jpg".format(out_dir, img_name)
         print("Store the image with slide-window markings to {}".format(out_file))
         fig.savefig(out_file)
