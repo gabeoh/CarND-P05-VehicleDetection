@@ -25,8 +25,9 @@ the vehicles by creating a heat map of recurring detections across frames.
 [img_slide_search_01]: ./output_images/slide_search/test6.jpg
 [img_heat_map_01]: ./output_images/heat_map/test6.jpg
 [img_vehicle_detection_01]: ./output_images/vehicle_detection/test6.jpg
-
 ---
+
+
 ## Feature Extraction
 The source code for feature extraction is in
 [py-src/p05_02_feature_extraction.py](py-src/p05_02_feature_extraction.py).
@@ -54,9 +55,9 @@ extraction.  Finally, the color space of `YCrCb`, and the HOG parameters of
 are selected.
 The image below demonstrates HOG feature extractions of the sample images.
 ![HOG Features][img_feat_ext_03]
-
-
 ---
+
+
 ## Classifier Training
 The source code for feature extraction is in
 [py-src/p05_03_train_classifier.py](py-src/p05_03_train_classifier.py).
@@ -81,17 +82,17 @@ selected for this implementation.
 The details on sweeping across various parameter space can be found in the
 train classifier output logs,
 [results/train_classifier.log](results/train_classifier.log). 
-
-
 ---
+
+
 ## Sliding Window Search
 
 ### 1. Determine Slide Window Positions
 The source code that determines slide window position is in
 [py-src/p05_04_determine_slide_window.py](py-src/p05_04_determine_slide_window.py).
 
-First, the positions of slide windows are determined.
-Five window sizes, which vary from (64, 64) to (320, 320), are used.
+In this step, the positions and scales of sliding windows are studied.
+Four window sizes, which vary from (64, 64) to (256, 256), are used.
 The upper parts (about half) of the images are disregarded because a vehicle
 does not appear there.
 From the remainder, some lower parts are also disregarded
@@ -111,7 +112,7 @@ The source code for slide window vehicle search is located in
 
 #### Slide Window Search
 At each slide window position determined in the previous step, the image
-under the slide window is converted to `YCrCb` color space and
+under the window is converted to `YCrCb` color space and
 resized to `64x64` scale in order to match the trained classifier.
 Then, the trained classifier is used to predict whether the image
 represents vehicle pixels or not.
@@ -120,7 +121,7 @@ The classifier uses binned spatial features, color histogram, and HOG features
 to predict the image classification.
 
 The slide window search results of test images are located under:
-[output_imgages/slide_search/](output_imgages/slide_search)
+[output_images/slide_search/](output_images/slide_search)
 
 An example image is included below.
 ![Slide Window Search][img_slide_search_01]
@@ -138,7 +139,7 @@ Then, `scipy.ndimage.measurements.label()` function is used to determine
 the final vehicle bounding boxes from the heat-map.
 
 The heat-map result of each test images is located under:
-[output_imgages/heat_map/](output_imgages/heat_map)
+[output_images/heat_map/](output_images/heat_map)
 
 An example image is shown below.
 ![Heat Map][img_heat_map_01]
@@ -146,7 +147,7 @@ An example image is shown below.
 #### Final Vehicle Detection
 
 The final vehicle detected images are located under:
-[output_imgages/vehicle_detection/](output_imgages/vehicle_detection)
+[output_images/vehicle_detection/](output_images/vehicle_detection)
 
 An example image is shown below.
 ![Vehicle Detection][img_vehicle_detection_01]
@@ -163,13 +164,13 @@ at each image scale.
 Then, bounding boxes for the slide windows are mapped to the HOG feature
 block dimensions.
 This technique significantly reduces the number of HOG feature extractions
-and therefore improves the pipeline run-time performance.
-
-
+and therefore improves the pipeline runtime performance.
 ---
+
+
 ## Vehicle Detection on Video
 
-The technique used on image detection is equally applicable on video detection.
+The techniques used on image detection are equally applicable on video detection.
 In other words, the vehicle detection is performed on each frame of video
 using Linear SVM classifier and sliding window techniques.
 
@@ -180,7 +181,7 @@ Also, heat-map and `scipy.ndimage.measurements.label()` are used in order to
 filter out false-positives and to identify clean bounding box for detected
 vehicles.
 _(Detailed description of this process is included in the above image
-processing part.)_
+processing section.)_
 
 #### Cross-Frame Optimization
 In addition, the heat-map from previous frame is carried over to the next
@@ -192,29 +193,29 @@ false-positive instances.
 
 This a link to the project video output:
 - [project_video.mp4](./output_images/video/project_video.mp4)
-
-
 ---
+
+
 ## Discussion
 
 ### 1. Limitation and Future Works
 Major drawback of this implementation is its runtime performance.  It took
 over 30 minutes to process 50 seconds project video on my MacBook Pro laptop.
-Perhaps, the better performance can be achieved more powerful device
-especially with GPUs.  However, the runtime performance enhancements
-are inevitable if this were to be used in real time.
+Perhaps, the better performance can be achieved on more powerful devices,
+especially ones with GPUs.  However, the runtime performance enhancements
+are inevitable in order to perform real-time vehicle detections.
 
 There are several potential approaches to improve the pipeline runtime.
-It is possible to utilize characteristics from previous predictions
+It is possible to further utilize characteristics from previous predictions
 to reduce search iterations.  More optimization on search area can also be
-performed to further improve.
+performed.
 
-However, there could be trade-offs between runtime performance and accuracy.
+However, there can be trade-offs between runtime performance and accuracy.
 More thorough analyses are required to find optimal way of balancing
-runtime and prediction accuracy   
-
-
+runtime and prediction accuracy.
 ---
+
+
 ## Appendix
 ### 1. Source and Outputs
 #### Source Code
