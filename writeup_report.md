@@ -26,16 +26,6 @@ the vehicles by creating a heat map of recurring detections across frames.
 [img_heat_map_01]: ./output_images/heat_map/test6.jpg
 [img_vehicle_detection_01]: ./output_images/vehicle_detection/test6.jpg
 
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
-
-
 ---
 ## Feature Extraction
 The source code for feature extraction is in
@@ -179,90 +169,99 @@ and therefore improves the pipeline run-time performance.
 ---
 ## Vehicle Detection on Video
 
-**Provide a link to your final video output.  Your pipeline should perform 
-reasonably well on the entire project video (somewhat wobbly or unstable 
-bounding boxes are ok as long as you are identifying the vehicles most of 
-the time with minimal false positives.)**
+The technique used on image detection is equally applicable on video detection.
+In other words, the vehicle detection is performed on each frame of video
+using Linear SVM classifier and sliding window techniques.
 
-_The sliding-window search plus classifier has been used to search for and 
-identify vehicles in the videos provided. Video output has been generated 
-with detected vehicle positions drawn (bounding boxes, circles, cubes, etc.) 
-on each frame of video._
+HOG features, binned spatial color features, and color histograms are used
+as features to train and predict vehicles from given video frames.
 
-Here's a [link to my video result](./project_video.mp4)
+Also, heat-map and `scipy.ndimage.measurements.label()` are used in order to
+filter out false-positives and to identify clean bounding box for detected
+vehicles.
+_(Detailed description of this process is included in the above image
+processing part.)_
 
+#### Cross-Frame Optimization
+In addition, the heat-map from previous frame is carried over to the next
+frame.  The previous heat-map contribution factor of 0.5 is selected
+after multiple experiments.  This means that the new heat-map is computed
+as an average of heat-map from current frame and contributions from previous
+frame.  This further improved the prediction accuracy by rejecting isolated
+false-positive instances.
 
-**Describe how (and identify where in your code) you implemented some kind 
-of filter for false positives and some method for combining overlapping 
-bounding boxes.**
-
-_A method, such as requiring that a detection be found at or near the same 
-position in several subsequent frames, (could be a heat map showing the 
-location of repeat detections) is implemented as a means of rejecting 
-false positives, and this demonstrably reduces the number of false positives. 
-Same or similar method used to draw bounding boxes (or circles, cubes, etc.) 
-around high-confidence detections where multiple overlapping detections occur._
-
-I recorded the positions of positive detections in each frame of the video.  
-From the positive detections I created a heatmap and then thresholded that 
-map to identify vehicle positions.  I then used 
-`scipy.ndimage.measurements.label()` to identify individual blobs in 
-the heatmap.  I then assumed each blob corresponded to a vehicle.  
-I constructed bounding boxes to cover the area of each blob detected.  
-
-Here's an example result showing the heatmap from a series of frames of 
-video, the result of `scipy.ndimage.measurements.label()` and the bounding 
-boxes then overlaid on the last frame of video:
-
-Here are six frames and their corresponding heatmaps:
-
-![alt text][image5]
-
-Here is the output of `scipy.ndimage.measurements.label()` on the 
-integrated heatmap from all six frames:
-![alt text][image6]
-
-Here the resulting bounding boxes are drawn onto the last frame in the series:
-![alt text][image7]
-
-
----
-## Suggestions to Make Your Project Stand Out!
-**A stand out submission for this project will be a pipeline that runs in 
-near real time (at least several frames per second on a good laptop) and 
-does a great job of identifying and tracking vehicles in the frame with a 
-minimum of false positives. As an optional challenge, combine this vehicle 
-detection pipeline with the lane finding implementation from the last project! 
-As an additional optional challenge, record your own video and run your 
-pipeline on it to detect vehicles under different conditions.**
+This a link to the project video output:
+- [project_video.mp4](./output_images/video/project_video.mp4)
 
 
 ---
 ## Discussion
 
 ### 1. Limitation and Future Works
+Major drawback of this implementation is its runtime performance.  It took
+over 30 minutes to process 50 seconds project video on my MacBook Pro laptop.
+Perhaps, the better performance can be achieved more powerful device
+especially with GPUs.  However, the runtime performance enhancements
+are inevitable if this were to be used in real time.
 
-**Briefly discuss any problems / issues you faced in your implementation 
-of this project.  Where will your pipeline likely fail?  What could you do 
-to make it more robust?**
+There are several potential approaches to improve the pipeline runtime.
+It is possible to utilize characteristics from previous predictions
+to reduce search iterations.  More optimization on search area can also be
+performed to further improve.
 
-_Discussion includes some consideration of problems/issues faced, what could 
-be improved about their algorithm/pipeline, and what hypothetical cases would 
-cause their pipeline to fail._
-
-Here I'll talk about the approach I took, what techniques I used, what worked 
-and why, where the pipeline might fail and how I might improve it if I were 
-going to pursue this project further.  
+However, there could be trade-offs between runtime performance and accuracy.
+More thorough analyses are required to find optimal way of balancing
+runtime and prediction accuracy   
 
 
 ---
 ## Appendix
 ### 1. Source and Outputs
 #### Source Code
+- Vehicle Detection 
+  - [p05_vehicle_detection_main.py](py-src/p05_vehicle_detection_main.py)
+  - [p05_01_correct_distortion.py](py-src/p05_01_correct_distortion.py)
+  - [p05_02_feature_extraction.py](py-src/p05_02_feature_extraction.py)
+  - [p05_03_train_classifier.py](py-src/p05_03_train_classifier.py)
+  - [p05_04_determine_slide_window.py](py-src/p05_04_determine_slide_window.py)
+  - [p05_05_slide_window_search.py](py-src/p05_05_slide_window_search.py)
+- Misc
+  - [my_util.py](py-src/my_util.py)
 
 #### Execution Log
+- Classifier Training 
+  - [train_classifier.log](results/train_classifier.log)
 
 #### Output Images
-
+- Feature Extraction
+  - [output_images/feat_extract/](output_images/feat_extract/)
+- Distortion Correction
+  - [output_images/undistorted/](output_images/undistorted/)
+- Slide Window Location
+  - [output_images/slide_win/](output_images/slide_win/)
+- Slide Window Search
+  - [output_images/slide_search/](output_images/slide_search/)
+- Heat Map
+  - [output_images/heat_map/](output_images/heat_map/)
+- Vehicle Detection
+  - [output_images/vehicle_detection/](output_images/vehicle_detection/)
+  
 #### Output Videos
+- Videos
+  - [output_images/video/](output_images/video/)
 
+#### Other Output Files
+- Camera Calibration Pickle File
+  - [camera_cal.p](results/camera_cal.p)
+- Trained Classifer Pickle Files
+  - [classifier_YCrCb_sp32_hist32_hog_9_8_2_ALL.p](results/classifier_YCrCb_sp32_hist32_hog_9_8_2_ALL.p)
+  - [classifier_HLS_sp32_hist32_hog_9_8_2_ALL.p](results/classifier_HLS_sp32_hist32_hog_9_8_2_ALL.p)
+  - [classifier_HSV_sp32_hist32_hog_9_8_2_ALL.p](results/classifier_HSV_sp32_hist32_hog_9_8_2_ALL.p)
+  - [classifier_LUV_sp32_hist32_hog_9_8_2_ALL.p](results/classifier_LUV_sp32_hist32_hog_9_8_2_ALL.p)
+  - [classifier_YCrCb_hist32.p](results/classifier_YCrCb_hist32.p)
+  - [classifier_YCrCb_hog_9_8_2_ALL.p](results/classifier_YCrCb_hog_9_8_2_ALL.p)
+  - [classifier_YCrCb_sp32_hist32_hog_9_8_2_0.p](results/classifier_YCrCb_sp32_hist32_hog_9_8_2_0.p)
+  - [classifier_YCrCb_sp32_hist32_hog_9_8_2_1.p](results/classifier_YCrCb_sp32_hist32_hog_9_8_2_1.p)
+  - [classifier_YCrCb_sp32_hist32_hog_9_8_2_2.p](results/classifier_YCrCb_sp32_hist32_hog_9_8_2_2.p)
+  - [classifier_YCrCb_sp32.p](results/classifier_YCrCb_sp32.p)
+  - [classifier_YUV_sp32_hist32_hog_9_8_2_ALL.p](results/classifier_YUV_sp32_hist32_hog_9_8_2_ALL.p)
