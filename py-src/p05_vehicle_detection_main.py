@@ -26,10 +26,6 @@ slide_win_dir = output_dir + 'slide_win/'
 slide_search_dir = output_dir + 'slide_search/'
 heat_map_dir = output_dir + 'heat_map/'
 detection_dir = output_dir + 'vehicle_detection/'
-
-binary_lane_dir = output_dir + 'binary_lanes/'
-perspective_trans_dir = output_dir + 'perspective/'
-overlay_dir = output_dir + 'overlay/'
 video_dst_dir = output_dir + 'video/'
 
 
@@ -39,6 +35,10 @@ def detect_vehicle_images(img_files, steps):
 
     # Step 0 - Analyze test image
     if (not steps) or (0 in steps):
+        # Determine list of files to process
+        if len(img_files) == 0:
+            img_files = sorted(os.listdir(test_img_dir))
+            img_files = [f for f in img_files if not f.startswith('.')]
         img_file = img_files[0]
         print_section_header("Analyze Test Images")
         img_path = test_img_dir + img_file
