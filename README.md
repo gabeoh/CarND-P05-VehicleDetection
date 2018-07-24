@@ -1,37 +1,92 @@
-# Vehicle Detection
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
+# CarND-P05-VehicleDetection
+
+CarND-P04-CarND-P05-VehicleDetection implements a pipeline to detect and
+track vehicles from images and video streams. 
+
+## File Structure
+### Project Requirements
+- **[py-src/](py-src/)** - Contains Python source codes that implement the
+    pipeline
+- **[output_images/](output_images/)** - Contains resulting output images and
+    videos for each pipeline step
+- **[writeup_report.md](writeup_report.md)** - Project write-up report
+
+### Additional Files
+- **[results/](results/)** - Project outputs such as pickle and execution
+    log files
+- **[test_images/](test_images/)** - Provided test images
+- **[test_videos/](test_videos/)** - Provided test videos
+
+### Not Included
+- **training_images** - Images to train classifier.  Can be downloaded from
+  following links.
+  - [Vehicle Images](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/vehicles.zip)
+  - [Non-Vehicle Images](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/non-vehicles.zip)
+  - [Udacity Labeled Training Dataset](https://github.com/udacity/self-driving-car/tree/master/annotations)
+
+## Getting Started
+### [Download ZIP](https://github.com/gabeoh/CarND-P05-VehicleDetection/archive/master.zip) or Git Clone
+```
+git clone https://github.com/gabeoh/CarND-P05-VehicleDetection.git
+```
+
+### Setup Environment
+
+You can set up the environment following
+[CarND-Term1-Starter-Kit - Miniconda](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/doc/configure_via_anaconda.md).
+This will install following packages required to run this application.
+
+- Miniconda
+- Python
+
+### Download Simulator
+- [Linux](https://d17h27t6h515a5.cloudfront.net/topher/2017/February/58ae46bb_linux-sim/linux-sim.zip)
+- [MacOS](https://d17h27t6h515a5.cloudfront.net/topher/2017/February/58ae4594_mac-sim.app/mac-sim.app.zip)
+- [Windows](https://d17h27t6h515a5.cloudfront.net/topher/2017/February/58ae4419_windows-sim/windows-sim.zip)
 
 
-In this project, your goal is to write a software pipeline to detect vehicles in a video (start with the test_video.mp4 and later implement on full project_video.mp4), but the main output or product we want you to create is a detailed writeup of the project.  Check out the [writeup template](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) for this project and use it as a starting point for creating your own writeup.  
+### Usage
 
-Creating a great writeup:
----
-A great writeup should include the rubric points as well as your description of how you addressed each point.  You should include a detailed description of the code used in each step (with line-number references and code snippets where necessary), and links to other supporting documents or external references.  You should include images in your writeup to demonstrate how your code works with examples.  
+#### Run Vehicle Detection on Test Images
+```
+$ cd py-src
 
-All that said, please be concise!  We're not looking for you to write a book here, just a brief description of how you passed each rubric point, and references to the relevant code :). 
+$ python p05_vehicle_detection_main.py --image
+or
+$ python p05_vehicle_detection_main.py -i
+```
 
-You can submit your writeup in markdown or use another method and submit a pdf instead.
+You can also run only specific steps.  For example, run only step 3
+perspective transform and step 4 lane line identification.
+```
+$ python p05_vehicle_detection_main.py -i -s 3 4
+```
 
-The Project
----
+More information on running option can be found by running:
+```
+$ python p05_vehicle_detection_main.py -h
+```
 
-The goals / steps of this project are the following:
+#### Run Lane Detection on Test Videos
+```
+$ cd py-src
 
-* Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
-* Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector. 
-* Note: for those first two steps don't forget to normalize your features and randomize a selection for training and testing.
-* Implement a sliding-window technique and use your trained classifier to search for vehicles in images.
-* Run your pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
-* Estimate a bounding box for vehicles detected.
+$ python p05_vehicle_detection_main.py --video
+or
+$ python p05_vehicle_detection_main.py -v
+```
 
-Here are links to the labeled data for [vehicle](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/vehicles.zip) and [non-vehicle](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/non-vehicles.zip) examples to train your classifier.  These example images come from a combination of the [GTI vehicle image database](http://www.gti.ssr.upm.es/data/Vehicle_database.html), the [KITTI vision benchmark suite](http://www.cvlibs.net/datasets/kitti/), and examples extracted from the project video itself.   You are welcome and encouraged to take advantage of the recently released [Udacity labeled dataset](https://github.com/udacity/self-driving-car/tree/master/annotations) to augment your training data.  
+You can also run on only specific video files.  For example, run the pipeline
+only on project video.
+```
+$ python p05_vehicle_detection_main.py -v -f project_video.mp4
+```
 
-Some example images for testing your pipeline on single frames are located in the `test_images` folder.  To help the reviewer examine your work, please save examples of the output from each stage of your pipeline in the folder called `ouput_images`, and include them in your writeup for the project by describing what each image shows.    The video called `project_video.mp4` is the video your pipeline should work well on.  
+More information on running option can be found by running:
+```
+$ python p05_vehicle_detection_main.py -h
+```
 
-**As an optional challenge** Once you have a working pipeline for vehicle detection, add in your lane-finding algorithm from the last project to do simultaneous lane-finding and vehicle detection!
-
-**If you're feeling ambitious** (also totally optional though), don't stop there!  We encourage you to go out and take video of your own, and show us how you would implement this project on a new video!
-
-## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+## License
+Licensed under [MIT](LICENSE) License.
 
