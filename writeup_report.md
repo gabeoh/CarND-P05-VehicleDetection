@@ -25,8 +25,8 @@ the vehicles by creating a heat map of recurring detections across frames.
 [img_slide_search_01]: ./output_images/slide_search/test6.jpg
 [img_heat_map_01]: ./output_images/heat_map/test6.jpg
 [img_vehicle_detection_01]: ./output_images/vehicle_detection/test6.jpg
----
 
+---
 
 ## Feature Extraction
 The source code for feature extraction is in
@@ -55,8 +55,8 @@ extraction.  Finally, the color space of `YCrCb`, and the HOG parameters of
 are selected.
 The image below demonstrates HOG feature extractions of the sample images.
 ![HOG Features][img_feat_ext_03]
----
 
+---
 
 ## Classifier Training
 The source code for feature extraction is in
@@ -82,8 +82,8 @@ selected for this implementation.
 The details on sweeping across various parameter space can be found in the
 train classifier output logs,
 [results/train_classifier.log](results/train_classifier.log). 
----
 
+---
 
 ## Sliding Window Search
 
@@ -165,8 +165,8 @@ Then, bounding boxes for the slide windows are mapped to the HOG feature
 block dimensions.
 This technique significantly reduces the number of HOG feature extractions
 and therefore improves the pipeline runtime performance.
----
 
+---
 
 ## Vehicle Detection on Video
 
@@ -193,8 +193,8 @@ false-positive instances.
 
 This a link to the project video output:
 - [project_video.mp4](./output_images/video/project_video.mp4)
----
 
+---
 
 ## Discussion
 
@@ -213,8 +213,8 @@ performed.
 However, there can be trade-offs between runtime performance and accuracy.
 More thorough analyses are required to find optimal way of balancing
 runtime and prediction accuracy.
----
 
+---
 
 ## Appendix
 ### 1. Source and Outputs
